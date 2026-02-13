@@ -33,8 +33,9 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  orders    Order[]
-  store     Store?
+  orders         Order[]
+  store          Store?
+  deliveryOrders Order[] @relation("DeliveryOrders")
 }
 
 model Store {
@@ -86,6 +87,9 @@ model Order {
 
   storeId String
   store   Store  @relation(fields: [storeId], references: [id])
+
+  deliveryUserId String?
+  deliveryUser   User?   @relation("DeliveryOrders", fields: [deliveryUserId], references: [id])
 
   items OrderItem[]
 }
